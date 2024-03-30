@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/widgets/meal_item_trait.dart';
 
 dynamic placeHolder = kTransparentImage;
 
@@ -58,6 +59,24 @@ class MealItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        MealItemTrait(
+                          icon: Icons.schedule,
+                          label: '${meal.duration} min',
+                        ),
+                        // const SizedBox(width: 12),
+                        // MealItemTrait(
+                        //   icon: Icons.work,
+                        //   label: meal.complexityText,
+                        // ),
+                        // const SizedBox(width: 12),
+                        // MealItemTrait(
+                        //   icon: Icons.attach_money,
+                        //   label: meal.affordabilityText,
+                        // ),
+                      ],
+                    ),
                   ],
                 ),
               ),
