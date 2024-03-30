@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals_app/screens/categories.dart';
 import 'package:meals_app/screens/meals.dart';
 
@@ -16,11 +17,7 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     Widget body = const CategoriesScreen();
 
-    if (_selectedTabIndex == 1) {
-      body = const MealsScreen(
-        meals: [],
-      );
-    }
+    if (_selectedTabIndex == 1) body = const MealsScreen(meals: []);
 
     return Scaffold(
       appBar: AppBar(
