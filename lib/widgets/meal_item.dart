@@ -16,6 +16,11 @@ class MealItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final complexityText =
+        meal.complexity.name[0] + meal.complexity.name.substring(1);
+    final affordabilityText =
+        meal.affordability.name[0] + meal.affordability.name.substring(1);
+
     return Card(
       margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
@@ -60,21 +65,22 @@ class MealItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MealItemTrait(
                           icon: Icons.schedule,
                           label: '${meal.duration} min',
                         ),
-                        // const SizedBox(width: 12),
-                        // MealItemTrait(
-                        //   icon: Icons.work,
-                        //   label: meal.complexityText,
-                        // ),
-                        // const SizedBox(width: 12),
-                        // MealItemTrait(
-                        //   icon: Icons.attach_money,
-                        //   label: meal.affordabilityText,
-                        // ),
+                        const SizedBox(width: 12),
+                        MealItemTrait(
+                          icon: Icons.work,
+                          label: complexityText,
+                        ),
+                        const SizedBox(width: 12),
+                        MealItemTrait(
+                          icon: Icons.attach_money,
+                          label: affordabilityText,
+                        ),
                       ],
                     ),
                   ],
