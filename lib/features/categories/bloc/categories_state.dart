@@ -22,5 +22,3 @@ class CategorySelectedActionState extends CategoriesActionState {
 
   CategorySelectedActionState({required this.category});
 }
-
-class CategoriesDrawerClickedActionState extends CategoriesActionState {}

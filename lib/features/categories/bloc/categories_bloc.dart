@@ -11,12 +11,18 @@ part 'categories_state.dart';
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   CategoriesBloc() : super(CategoriesInitial()) {
     on<CategoriesInitalEvent>(categoriesInitalEvent);
+    on<CategorySelectedEvent>(categorySelectedEvent);
   }
 
   FutureOr<void> categoriesInitalEvent(
       CategoriesInitalEvent event, Emitter<CategoriesState> emit) async {
     emit(CategoriesLoading());
-    // await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2)); fetching data from the internet
     emit(CategoriesLoadingSuccess(categories: availableCategories));
+  }
+
+  FutureOr<void> categorySelectedEvent(
+      CategorySelectedEvent event, Emitter<CategoriesState> emit) {
+    emit(CategorySelectedActionState(category: event.category));
   }
 }

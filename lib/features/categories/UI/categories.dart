@@ -51,9 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: availableCategories
           .map((category) => CategorieGridItem(
                 category: category,
-                onSelectCategory: () {
-                  _selectCategory(context, category);
-                },
+                categoriesBlac: categoriesBloc,
               ))
           .toList(),
     );
@@ -64,10 +62,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       buildWhen: (previous, current) => current is! CategoriesActionState,
       listener: (context, state) {
         if (state is CategorySelectedActionState) {
-          print("here");
           _selectCategory(context, state.category);
-        } else if (state is CategoriesDrawerClickedActionState) {
-          Scaffold.of(context).openDrawer();
         }
       },
       builder: (context, state) {

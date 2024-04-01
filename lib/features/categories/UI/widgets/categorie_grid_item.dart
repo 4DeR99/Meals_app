@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/features/categories/bloc/categories_bloc.dart';
 
 import 'package:meals_app/features/categories/models/category.dart';
 
@@ -6,16 +7,18 @@ class CategorieGridItem extends StatelessWidget {
   const CategorieGridItem({
     super.key,
     required this.category,
-    required this.onSelectCategory,
+    required this.categoriesBlac,
   });
 
+  final CategoriesBloc categoriesBlac;
   final Category category;
-  final void Function() onSelectCategory;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onSelectCategory,
+      onTap: () {
+        categoriesBlac.add(CategorySelectedEvent(category: category));
+      },
       borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: const EdgeInsets.all(15),

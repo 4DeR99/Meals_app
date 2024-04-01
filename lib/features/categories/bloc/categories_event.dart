@@ -10,5 +10,3 @@ class CategorySelectedEvent extends CategoriesEvent {
 
   CategorySelectedEvent({required this.category});
 }
-
-class CategoriesDrawerClickedEvent extends CategoriesEvent {}
