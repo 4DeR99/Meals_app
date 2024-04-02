@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/features/meal_details/UI/widgets/favotires_button.dart';
 import 'package:meals_app/features/meals/models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
@@ -14,6 +15,9 @@ class MealDetailsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(meal.title),
+          actions: [
+            // FavoritesButton(meal: meal),
+          ],
         ),
         body: SingleChildScrollView(
           child: Column(
