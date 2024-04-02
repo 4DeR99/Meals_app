@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/features/meals/bloc/meals_bloc.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:meals_app/features/meals/models/meal.dart';
 
@@ -10,11 +11,11 @@ class MealItem extends StatelessWidget {
   const MealItem({
     super.key,
     required this.meal,
-    required this.onSelectMeal,
+    required this.mealsBloc,
   });
 
   final Meal meal;
-  final Function() onSelectMeal;
+  final MealsBloc mealsBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,9 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: onSelectMeal,
+        onTap: () {
+          mealsBloc.add(MealSelectedEvent(meal: meal));
+        },
         child: Stack(
           children: [
             FadeInImage(

@@ -25,6 +25,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         builder: ((context) => MealsScreen(
               title: category.title,
               meals: filteredMeals,
+              category: category,
             )),
       ),
     );

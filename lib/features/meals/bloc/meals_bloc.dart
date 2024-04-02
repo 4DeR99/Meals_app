@@ -23,5 +23,6 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
   }
 
   FutureOr<void> mealSelectedEvent(MealSelectedEvent event, Emitter<MealsState> emit) {
+    emit(MealSelectedActionState(meal: event.meal));
   }
 }
