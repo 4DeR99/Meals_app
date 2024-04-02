@@ -22,7 +22,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
     Widget body = const CategoriesScreen();
 
-    if (_selectedTabIndex == 1) body = const MealsScreen(meals: []);
+    if (_selectedTabIndex == 1) body = const MealsScreen();
 
     return Scaffold(
       appBar: AppBar(

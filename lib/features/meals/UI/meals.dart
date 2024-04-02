@@ -12,11 +12,9 @@ class MealsScreen extends StatefulWidget {
     super.key,
     this.title,
     this.category,
-    required this.meals,
   });
 
   final String? title;
-  final List<Meal> meals;
   final Category? category;
 
   @override
@@ -35,18 +33,18 @@ class _MealsScreenState extends State<MealsScreen> {
 
   final MealsBloc mealsBloc = MealsBloc();
 
-  Widget _getBody() {
+  Widget _getBody(List<Meal> meals) {
     Widget body = ListView.builder(
-      itemCount: widget.meals.length,
+      itemCount: meals.length,
       itemBuilder: (context, index) {
         return MealItem(
-          meal: widget.meals[index],
+          meal: meals[index],
           mealsBloc: mealsBloc,
         );
       },
     );
 
-    if (widget.meals.isEmpty) {
+    if (meals.isEmpty) {
       body = Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -76,21 +74,24 @@ class _MealsScreenState extends State<MealsScreen> {
     super.initState();
     if (widget.category != null) {
       mealsBloc.add(MealsInitialEvent(category: widget.category!));
+    } else {
+      mealsBloc.add(FavoritesMealsEvent());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     Widget body = Container();
+    PreferredSizeWidget? appBar;
 
-    if (widget.title == null) {
-      return body;
+    if (widget.title != null) {
+      appBar = AppBar(
+        title: Text(widget.title!),
+      );
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
+      appBar: appBar,
       body: BlocConsumer<MealsBloc, MealsState>(
         bloc: mealsBloc,
         listenWhen: (previous, current) => current is MealActionState,
@@ -101,7 +102,7 @@ class _MealsScreenState extends State<MealsScreen> {
           }
         },
         builder: (context, state) {
-          if (state is MealsLoadingState) {
+          if (state is MealsLoadingState || state is FavoritesMealsLoadingState) {
             body = const Center(
               child: CircularProgressIndicator(),
             );
@@ -109,8 +110,14 @@ class _MealsScreenState extends State<MealsScreen> {
             body = Center(
               child: Text(state.message),
             );
+          } else if (state is FavoritesMealsLoadedFailureState) {
+            body = Center(
+              child: Text(state.message),
+            );
           } else if (state is MealsLoadedSuccessState) {
-            body = _getBody();
+            body = _getBody(state.meals);
+          } else if (state is FavoritesMealsLoadedSuccessState) {
+            body = _getBody(state.meals);
           }
           return body;
         },

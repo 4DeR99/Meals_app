@@ -21,6 +21,22 @@ class MealsLoadedFailureState extends MealsState {
   MealsLoadedFailureState({required this.message});
 }
 
+class FavoritesMealsState extends MealsState {}
+
+class FavoritesMealsLoadingState extends MealsState {}
+
+class FavoritesMealsLoadedSuccessState extends MealsState {
+  final List<Meal> meals;
+
+  FavoritesMealsLoadedSuccessState({required this.meals});
+}
+
+class FavoritesMealsLoadedFailureState extends MealsState {
+  final String message;
+
+  FavoritesMealsLoadedFailureState({required this.message});
+}
+
 class MealSelectedActionState extends MealActionState {
   final Meal meal;
 

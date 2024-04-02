@@ -9,6 +9,8 @@ class MealsInitialEvent extends MealsEvent {
   MealsInitialEvent({required this.category});
 }
 
+class FavoritesMealsEvent extends MealsEvent {}
+
 class MealSelectedEvent extends MealsEvent {
   final Meal meal;
 
