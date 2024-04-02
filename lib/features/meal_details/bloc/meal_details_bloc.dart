@@ -15,22 +15,27 @@ class MealDetailsBloc extends Bloc<MealDetailsEvent, MealDetailsState> {
     on<RemoveFromFavoritesEvent>(removeFromFavoritesEvent);
   }
 
-  FutureOr<void> mealDetailsInitialEvent(MealDetailsInitialEvent event, Emitter<MealDetailsState> emit) {
+  FutureOr<void> mealDetailsInitialEvent(
+      MealDetailsInitialEvent event, Emitter<MealDetailsState> emit) {
     emit(LoadingState());
     emit(LoadingSuccessState(favorites.contains(event.meal)));
   }
 
-  FutureOr<void> addToFavoritesEvent(AddToFavoritesEvent event, Emitter<MealDetailsState> emit) {
+  FutureOr<void> addToFavoritesEvent(
+      AddToFavoritesEvent event, Emitter<MealDetailsState> emit) {
     if (!favorites.contains(event.meal)) {
       favorites.add(event.meal);
       emit(LoadingSuccessState(true));
+      emit(AddToFavoritesActionState(event.meal));
     }
   }
 
-  FutureOr<void> removeFromFavoritesEvent(RemoveFromFavoritesEvent event, Emitter<MealDetailsState> emit) {
+  FutureOr<void> removeFromFavoritesEvent(
+      RemoveFromFavoritesEvent event, Emitter<MealDetailsState> emit) {
     if (favorites.contains(event.meal)) {
       favorites.remove(event.meal);
       emit(LoadingSuccessState(false));
+      emit(RemoveFromFavoritesActionState(event.meal));
     }
   }
 }

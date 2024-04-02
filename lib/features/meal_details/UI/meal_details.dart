@@ -8,9 +8,11 @@ class MealDetailsScreen extends StatefulWidget {
   const MealDetailsScreen({
     super.key,
     required this.meal,
+    required this.updateFavorites,
   });
 
   final Meal meal;
+  final void Function() updateFavorites;
 
   @override
   State<MealDetailsScreen> createState() => _MealDetailsScreenState();
@@ -18,12 +20,6 @@ class MealDetailsScreen extends StatefulWidget {
 
 class _MealDetailsScreenState extends State<MealDetailsScreen> {
   final MealDetailsBloc mealDetailsBloc = MealDetailsBloc();
-
-  @override
-  void initState() {
-    mealDetailsBloc.add(MealDetailsInitialEvent(widget.meal));
-    super.initState();
-  }
 
   Widget _getBody(Widget actionButton) {
     return Scaffold(
@@ -88,12 +84,32 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
   }
 
   @override
+  void initState() {
+    mealDetailsBloc.add(MealDetailsInitialEvent(widget.meal));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<MealDetailsBloc, MealDetailsState>(
       bloc: mealDetailsBloc,
       listenWhen: (previous, current) => current is ActionState,
       buildWhen: (previous, current) => current is! ActionState,
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AddToFavoritesActionState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Added to favorites'),
+            ),
+          );
+        } else if (state is RemoveFromFavoritesActionState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Removed from favorites'),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is LoadingState) {
           return const Center(
@@ -104,6 +120,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
             isFavorite: state.isFavorite,
             meal: widget.meal,
             mealDetailsBloc: mealDetailsBloc,
+            updateFavorites: widget.updateFavorites,
           );
           return _getBody(actionButton);
         } else if (state is LoadingFailureState) {

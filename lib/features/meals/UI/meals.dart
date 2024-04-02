@@ -26,9 +26,16 @@ class _MealsScreenState extends State<MealsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: ((context) => MealDetailsScreen(meal: meal)),
+        builder: ((context) =>
+            MealDetailsScreen(meal: meal, updateFavorites: _updateFavorites)),
       ),
     );
+  }
+
+  void _updateFavorites() {
+    if (widget.category == null) {
+      mealsBloc.add(FavoritesMealsEvent());
+    }
   }
 
   final MealsBloc mealsBloc = MealsBloc();
@@ -102,7 +109,8 @@ class _MealsScreenState extends State<MealsScreen> {
           }
         },
         builder: (context, state) {
-          if (state is MealsLoadingState || state is FavoritesMealsLoadingState) {
+          if (state is MealsLoadingState ||
+              state is FavoritesMealsLoadingState) {
             body = const Center(
               child: CircularProgressIndicator(),
             );

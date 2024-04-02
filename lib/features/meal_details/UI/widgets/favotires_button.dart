@@ -8,11 +8,13 @@ class FavoritesButton extends StatelessWidget {
     required this.isFavorite,
     required this.mealDetailsBloc,
     required this.meal,
+    required this.updateFavorites,
   });
 
   final bool isFavorite;
   final MealDetailsBloc mealDetailsBloc;
   final Meal meal;
+  final void Function() updateFavorites;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class FavoritesButton extends StatelessWidget {
         icon: const Icon(Icons.favorite),
         onPressed: () {
           mealDetailsBloc.add(RemoveFromFavoritesEvent(meal));
+          updateFavorites();
         },
       );
     } else {
@@ -28,6 +31,7 @@ class FavoritesButton extends StatelessWidget {
         icon: const Icon(Icons.favorite_border),
         onPressed: () {
           mealDetailsBloc.add(AddToFavoritesEvent(meal));
+          updateFavorites();
         },
       );
     }
