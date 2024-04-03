@@ -26,7 +26,6 @@ class MealDetailsBloc extends Bloc<MealDetailsEvent, MealDetailsState> {
     if (!favorites.contains(event.meal)) {
       favorites.add(event.meal);
       emit(LoadingSuccessState(true));
-      emit(AddToFavoritesActionState(event.meal));
     }
   }
 
@@ -35,7 +34,6 @@ class MealDetailsBloc extends Bloc<MealDetailsEvent, MealDetailsState> {
     if (favorites.contains(event.meal)) {
       favorites.remove(event.meal);
       emit(LoadingSuccessState(false));
-      emit(RemoveFromFavoritesActionState(event.meal));
     }
   }
 }
