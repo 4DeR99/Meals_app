@@ -32,11 +32,14 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              widget.meal.imageUrl,
-              fit: BoxFit.cover,
-              height: 300,
-              width: double.infinity,
+            Hero(
+              tag: widget.meal.id,
+              child: Image.network(
+                widget.meal.imageUrl,
+                fit: BoxFit.cover,
+                height: 300,
+                width: double.infinity,
+              ),
             ),
             const SizedBox(height: 14),
             Text(
