@@ -24,7 +24,7 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
     final List<Meal> meals = dummyMeals
         .where((meal) => meal.categories.contains(event.category.id))
         .toList();
-    final List<Meal> filteredMeals = meals.where((meal) {
+    emit(MealsLoadedSuccessState(meals: meals.where((meal) {
       if (filters[Filter.glutenFree]! && !meal.isGlutenFree) {
         return false;
       } else if (filters[Filter.lactoseFree]! && !meal.isLactoseFree) {
@@ -35,8 +35,7 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
         return false;
       }
       return true;
-    }).toList();
-    emit(MealsLoadedSuccessState(meals: filteredMeals));
+    }).toList()));
   }
 
   FutureOr<void> mealSelectedEvent(
@@ -47,6 +46,19 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
   FutureOr<void> favoritesMealsEvent(
       FavoritesMealsEvent event, Emitter<MealsState> emit) {
     emit(FavoritesMealsLoadingState());
-    emit(FavoritesMealsLoadedSuccessState(meals: favorites));
+    emit(FavoritesMealsLoadedSuccessState(meals: favorites.where(
+        (meal) {
+          if (filters[Filter.glutenFree]! && !meal.isGlutenFree) {
+            return false;
+          } else if (filters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+            return false;
+          } else if (filters[Filter.vegetarian]! && !meal.isVegetarian) {
+            return false;
+          } else if (filters[Filter.vegan]! && !meal.isVegan) {
+            return false;
+          }
+          return true;
+        }
+    ).toList()));
   }
 }
