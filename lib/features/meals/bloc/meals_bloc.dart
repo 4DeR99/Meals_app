@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meals_app/data/favorites_data.dart';
+import 'package:meals_app/data/filters.dart';
 import 'package:meals_app/features/categories/models/category.dart';
 import 'package:meals_app/features/meals/models/meal.dart';
 import 'package:meta/meta.dart';
@@ -20,10 +21,22 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
   FutureOr<void> mealsInitialEvent(
       MealsInitialEvent event, Emitter<MealsState> emit) {
     emit(MealsLoadingState());
+    final List<Meal> meals = dummyMeals
+        .where((meal) => meal.categories.contains(event.category.id))
+        .toList();
     emit(MealsLoadedSuccessState(
-        meals: dummyMeals
-            .where((meal) => meal.categories.contains(event.category.id))
-            .toList()));
+        meals: meals.where((meal) {
+      if (filters[Filter.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      } else if (filters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+        return false;
+      } else if (filters[Filter.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      } else if (filters[Filter.vegan]! && !meal.isVegan) {
+        return false;
+      }
+      return true;
+    }).toList()));
   }
 
   FutureOr<void> mealSelectedEvent(
