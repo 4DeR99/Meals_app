@@ -24,6 +24,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Color activeColor = Theme.of(context).colorScheme.primary;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filters'),
@@ -49,7 +51,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
+            activeColor: activeColor,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
           SwitchListTile(
@@ -71,7 +73,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
+            activeColor: activeColor,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
           SwitchListTile(
@@ -93,7 +95,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
+            activeColor: activeColor,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
           SwitchListTile(
@@ -115,7 +117,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
+            activeColor: activeColor,
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
         ],
