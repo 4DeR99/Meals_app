@@ -24,8 +24,7 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
     final List<Meal> meals = dummyMeals
         .where((meal) => meal.categories.contains(event.category.id))
         .toList();
-    emit(MealsLoadedSuccessState(
-        meals: meals.where((meal) {
+    final List<Meal> filteredMeals = meals.where((meal) {
       if (filters[Filter.glutenFree]! && !meal.isGlutenFree) {
         return false;
       } else if (filters[Filter.lactoseFree]! && !meal.isLactoseFree) {
@@ -36,7 +35,8 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
         return false;
       }
       return true;
-    }).toList()));
+    }).toList();
+    emit(MealsLoadedSuccessState(meals: filteredMeals));
   }
 
   FutureOr<void> mealSelectedEvent(
