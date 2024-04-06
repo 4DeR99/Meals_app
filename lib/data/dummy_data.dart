@@ -131,7 +131,7 @@ const dummyMeals = [
     complexity: Complexity.simple,
     imageUrl:
         'https://cdn.pixabay.com/photo/2014/10/23/18/05/burger-500054_1280.jpg',
-    duration: 45,
+    duration: 40,
     ingredients: [
       '300g Cattle Hack',
       '1 Tomato',
